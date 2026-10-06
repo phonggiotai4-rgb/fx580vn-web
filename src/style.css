@@ -1,0 +1,264 @@
+:root {
+  --case: #22252b;
+  --case-edge: #14161a;
+  --key: #3a3f48;
+  --key-top: #464c57;
+  --key-text: #eef1f6;
+  --accent: #d94f4f;
+  --function: #4f7fd9;
+  --shift-text: #f0b429;
+  --alpha-text: #5ec8d8;
+  --lcd-bg: #cfe0cb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 12px 48px;
+  background: radial-gradient(circle at 50% 0%, #2f343d, #171a1f 70%);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: #e8ecf3;
+}
+
+.calc {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: min(420px, 100%);
+}
+
+.calc-body {
+  padding: 18px 16px 20px;
+  border-radius: 18px;
+  background: linear-gradient(160deg, #2b2f36, var(--case) 45%, var(--case-edge));
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 0 4px;
+}
+
+.brand-model {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #d7dce5;
+}
+
+.brand-sub {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #7b8494;
+}
+
+.screen {
+  padding: 10px;
+  border-radius: 10px;
+  background: #b9cbb5;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.lcd {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+  background: var(--lcd-bg);
+  border-radius: 4px;
+}
+
+.keypad {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.key-row {
+  display: flex;
+  gap: 7px;
+}
+
+.key {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  height: 46px;
+  padding: 0;
+  border: 0;
+  border-radius: 9px;
+  background: linear-gradient(180deg, var(--key-top), var(--key));
+  color: var(--key-text);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  transition: transform 0.06s ease, box-shadow 0.06s ease, filter 0.12s ease;
+}
+
+.key:hover {
+  filter: brightness(1.12);
+}
+
+.key:active,
+.key.is-active {
+  transform: translateY(2px);
+  box-shadow:
+    0 0 0 rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.key:focus-visible {
+  outline: 2px solid #7fb2ff;
+  outline-offset: 1px;
+}
+
+.key-wide {
+  flex: 1.5 1 0;
+}
+
+.key-narrow {
+  flex: 0.7 1 0;
+}
+
+.key-label {
+  position: relative;
+  z-index: 1;
+}
+
+.key-above,
+.key-alpha {
+  position: absolute;
+  top: 3px;
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.key-above {
+  left: 5px;
+  color: var(--shift-text);
+}
+
+.key-alpha {
+  right: 5px;
+  color: var(--alpha-text);
+}
+
+/* SHIFT / ALPHA lit: the physical keys change colour while held. */
+.calc[data-shift='true'] .key[data-key='shift'],
+.calc[data-alpha='true'] .key[data-key='alpha'] {
+  background: linear-gradient(180deg, #f0b429, #d69a12);
+  color: #23262c;
+}
+
+.calc[data-shift='true'] .key[data-key='shift'] .key-alpha,
+.calc[data-alpha='true'] .key[data-key='alpha'] .key-alpha {
+  color: rgba(35, 38, 44, 0.65);
+}
+
+.key-control {
+  background: linear-gradient(180deg, #4a505b, #363b44);
+}
+
+.key-action {
+  background: linear-gradient(180deg, #5b6270, #414751);
+}
+
+.key-operator {
+  background: linear-gradient(180deg, #55606f, #3c4551);
+}
+
+.key-function {
+  background: linear-gradient(180deg, var(--function), #3a63ad);
+}
+
+.key-variable {
+  background: linear-gradient(180deg, #4f8a7a, #3a6a5d);
+}
+
+.key-digest[data-key='ac'] {
+  background: linear-gradient(180deg, #d96161, var(--accent));
+  color: #fff;
+}
+
+.key-digest[data-key='del'] {
+  background: linear-gradient(180deg, #b8863a, #96682a);
+}
+
+.key[data-key='equals'] {
+  background: linear-gradient(180deg, #5f8ad6, #3f68b4);
+}
+
+/* ON clears everything, including mode, so it reads as a power key. */
+.key[data-key='on'] {
+  background: linear-gradient(180deg, #8a5fc9, #6a42a5);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.hints {
+  width: min(560px, 100%);
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  color: #aeb6c4;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.hints p {
+  margin: 0 0 6px;
+}
+
+.hints p:last-child {
+  margin-bottom: 0;
+}
+
+.hints b {
+  color: #dfe5ee;
+}
+
+.hints code,
+.hints kbd {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: 'Cascadia Mono', Consolas, monospace;
+  font-size: 12px;
+  color: #e8ecf3;
+}
+
+@media (max-width: 380px) {
+  .key {
+    height: 42px;
+    font-size: 13px;
+  }
+}
